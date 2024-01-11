@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-        
+
         <div class="intro row">
             <div class="overlay"></div>
             <div class="col-sm-12">
@@ -13,29 +13,11 @@
     <div class="nutral"></div>
 </section> <!-- /#header -->
 <section class="faq">
-    THIS IS LOADING THE Author.php
     <?php if ( have_posts() ) : ?>
 
         <?php while ( have_posts() ) : the_post(); ?>
 
-            <div class="container page-bgc">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="title-box">
-                            <h2 class="title mt0">
-                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2">
-                        <div class="inner-p">
-                            <?php the_excerpt(); ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php get_template_part( 'partials/content', 'post' ); ?>
 
         <?php endwhile; ?>
 

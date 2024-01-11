@@ -28,7 +28,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
-                        <a href="<?php echo get_home_url(); ?>"><img src="http://localhost/softuni/wp-content/themes/softuni/assets/images/logo.png" alt="logo"></a>
+                        <a href="<?php echo esc_url( get_home_url() ); ?>"><img src="http://localhost/softuni/wp-content/themes/softuni/assets/images/logo.png" alt="logo"></a>
                     </div>
                     <div class="col-sm-3 col-sm-offset-3 text-right">
                         <span class="ion-android-cart"></span> 0 products
@@ -47,27 +47,30 @@
 
     <!-- Header -->
     <section id="header" class="main-header faq-header inner-header">
-    <div class="container">
+        <div class="container">
 
-        <div class="row">
-            <nav class="navbar navbar-default">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
+            <div class="row">
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
 
-                <?php
-                wp_nav_menu( array(
-                    'menu'           => 'primary-menu',
-                    'menu_id'        => 'site-nav-bar',
-                    'theme_location' => 'primary_menu',
-                    'menu_class'     => 'nav navbar-nav',
-                    'container_class'=> 'collapse navbar-collapse',
-                ));
-                ?>
-            </nav>
-        </div>
+                    <?php
+                    wp_nav_menu( array(
+                        'menu'           => 'primary-menu',
+                        'menu_id'        => 'site-nav-bar',
+                        'theme_location' => 'primary_menu',
+                        'menu_class'     => 'nav navbar-nav',
+                        'container_class'=> 'collapse navbar-collapse',
+                    ));
+                    ?>
+                </nav>
+            </div>
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->

@@ -66,6 +66,7 @@ wp-content/themes/twentytwentytwo/
 wp-content/plugins/akismet/
 wp-content/plugins/contact-form-7/
 wp-content/plugins/query-monitor/
+/wp-content/plugins/wp-dummy-content-generator/
 
 
 ### Backups Files ###

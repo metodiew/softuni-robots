@@ -1,5 +1,7 @@
 <?php
 
+add_theme_support( 'post-thumbnails' );
+
 /**
  * Never worry about cache again!
  */
