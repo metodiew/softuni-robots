@@ -45,6 +45,8 @@ node_modules
 # List the themes here #
 
 ### Theme build files ###
+/wp-content/themes/notes.txt
+
 /wp-content/themes/*/node_modules
 /wp-content/themes/*/assets/dist/
 /wp-content/themes/*/assets-manifest.json
@@ -52,8 +54,19 @@ node_modules
 /wp-content/themes/*/inc/blocks/dist/
 /wp-content/themes/*/assets-manifest.json
 
+wp-content/themes/twentynineteen/
+wp-content/themes/twentytwenty/
+wp-content/themes/twentytwentyfour/
+wp-content/themes/twentytwentyone/
+wp-content/themes/twentytwentythree/
+wp-content/themes/twentytwentytwo/
+
 ### Plugins ###
 /wp-content/db.php
+wp-content/plugins/akismet/
+wp-content/plugins/contact-form-7/
+wp-content/plugins/query-monitor/
+
 
 ### Backups Files ###
 # List the backup files here
