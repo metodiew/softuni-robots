@@ -15,7 +15,7 @@
         <!-- google fonts -->
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
-        
+
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -28,7 +28,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
-                        <a href="index.html"><img src="http://localhost/softuni/wp-content/themes/softuni/assets/images/logo.png" alt="logo"></a>
+                        <a href="<?php echo get_home_url(); ?>"><img src="http://localhost/softuni/wp-content/themes/softuni/assets/images/logo.png" alt="logo"></a>
                     </div>
                     <div class="col-sm-3 col-sm-offset-3 text-right">
                         <span class="ion-android-cart"></span> 0 products
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        
+
     <!-- Header -->
     <section id="header" class="main-header faq-header inner-header">
     <div class="container">
@@ -60,14 +60,14 @@
                     </button>
                 </div>
 
-                <div class="collapse navbar-collapse" id="site-nav-bar">
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="shop.html">Shop</a></li>
-                        <li class="active"><a href="faq.html">FAQ</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
+                <?php
+                wp_nav_menu( array(
+                    'menu'           => 'primary-menu',
+                    'menu_id'        => 'site-nav-bar',
+                    'theme_location' => 'primary_menu',
+                    'menu_class'     => 'nav navbar-nav',
+                    'container_class'=> 'collapse navbar-collapse',
+                ));
+                ?>
             </nav>
         </div>

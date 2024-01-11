@@ -155,7 +155,9 @@ body{
 	border-color: #262626;
     background-color: #111;
 }
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover{
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover{
 	color: #fabe12;
 	background-color: transparent;
 }
@@ -767,4 +769,9 @@ body{
 		padding-left: 15px;
 		padding-right: 15px;
 	}
+}
+
+/* Our custom CSS */
+.navbar-collapse .current-menu-item a {
+	color: #fabe12 !important;
 }

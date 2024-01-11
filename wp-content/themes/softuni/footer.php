@@ -2,16 +2,11 @@
 <section id="footer-widget" class="footer-widget">
             <div class="container header-bg">
                 <div class="row">
-                    <div class="col-sm-3">
-                        <h3>Our Popular Services</h3>
-                        <ul>
-                            <li><a href="#">Space Robot</a></li>
-                            <li><a href="#">Lego Robot</a></li>
-                            <li><a href="#">Toy for Robot</a></li>
-                            <li><a href="#">Industry Robot</a></li>
-                            <li><a href="#">Sports Robot</a></li>
-                        </ul>
-                    </div>
+                    <?php
+                        if ( is_active_sidebar( 'footer-1' ) ) {
+                            get_sidebar( 'footer-1' );
+                        }
+                        ?>
                     <div class="col-sm-3">
                         <h3>Important Link</h3>
                         <ul>
