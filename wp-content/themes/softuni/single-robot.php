@@ -31,6 +31,10 @@
                         <div class="inner-p">
                             <?php the_content(); ?>
                         </div>
+
+                        <div class="like-button">
+                            <a class="robots-like" href="javascript:void(0)" data-post-id="<?php echo get_the_ID(); ?>">Like me</a>
+                        </div>
                     </div>
                 </div>
             </div>
