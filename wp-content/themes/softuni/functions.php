@@ -26,6 +26,7 @@ function softunit_assets( $hook ) {
 	wp_enqueue_script( 'bootstrap-min-js', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array(), '1.0.0', $args );
     wp_enqueue_script( 'jquery.magnific-popup', get_template_directory_uri() . '/assets/js/jquery.magnific-popup.min.js', array(), '1.0.0', $args );
     wp_enqueue_script( 'owl.carousel', get_template_directory_uri() . '/assets/js/owl.carousel.min.js', array(), '1.0.0', $args );
+	wp_enqueue_script( 'softuni-scripts', get_template_directory_uri() . '/assets/js/script.js', array( 'jquery' ), '1.0.3', $args );
 
     wp_enqueue_style( 'bootstrap.min-css', get_template_directory_uri() . '/assets/css/bootstrap.min.css', false, '1.0.0' );
     wp_enqueue_style( 'ionicons.css', get_template_directory_uri() . '/assets/css/ionicons.css', false, '1.0.0' );
