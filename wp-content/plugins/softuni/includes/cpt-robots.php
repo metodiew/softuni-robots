@@ -1,132 +1,147 @@
 <?php
-// Simple file for our Robots Custom Post Type
 
-// you can use this approach
-// if ( ! function_exists( 'su_robots_cpt' ) ) { }
+if ( ! class_exists( 'Su_Robots' ) ) :
 
 /**
- * Register our Robots Custom Post Type
- *
- * @return void
+ * This is our simple Robots Class for our custom functionality
  */
-function su_robots_cpt() {
-    $labels = array(
-		'name'                  => _x( 'Robots', 'Post type general name', 'textdomain' ),
-		'singular_name'         => _x( 'Robot', 'Post type singular name', 'textdomain' ),
-		'menu_name'             => _x( 'Robots', 'Admin Menu text', 'textdomain' ),
-		'name_admin_bar'        => _x( 'Robot', 'Add New on Toolbar', 'textdomain' ),
-		'add_new'               => __( 'Add New', 'textdomain' ),
-		'add_new_item'          => __( 'Add New Robot', 'textdomain' ),
-		'new_item'              => __( 'New Robot', 'textdomain' ),
-		'edit_item'             => __( 'Edit Robot', 'textdomain' ),
-		'view_item'             => __( 'View Robot', 'textdomain' ),
-		'all_items'             => __( 'All Robots', 'textdomain' ),
-		// 'search_items'          => __( 'Search Robots', 'textdomain' ),
-		// 'parent_item_colon'     => __( 'Parent Robots:', 'textdomain' ),
-		// 'not_found'             => __( 'No Robots found.', 'textdomain' ),
-		// 'not_found_in_trash'    => __( 'No Robots found in Trash.', 'textdomain' ),
-		// 'featured_image'        => _x( 'Robot Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		// 'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		// 'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		// 'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		// 'archives'              => _x( 'Robot archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
-		// 'insert_into_item'      => _x( 'Insert into Robot', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
-		// 'uploaded_to_this_item' => _x( 'Uploaded to this Robot', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
-		// 'filter_items_list'     => _x( 'Filter Robots list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
-		// 'items_list_navigation' => _x( 'Robots list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
-		// 'items_list'            => _x( 'Robots list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
-	);
+class Su_Robots {
 
-    $args = array(
-		'labels'             => $labels,
-		'public'             => true,
-		'publicly_queryable' => true,
-		'show_ui'            => true,
-		'show_in_menu'       => true,
-		'query_var'          => true,
-		'capability_type'    => 'post',
-		'has_archive'        => true,
-		'hierarchical'       => false,
-		'menu_position'      => null,
-		'supports'           => array(
-            'title',
-            'editor',
-            'author',
-            'thumbnail',
-            'revisions',
-        ),
-        // 'show_in_rest'       => true
-	);
+	private $ctp_name = '';
 
-    register_post_type( 'robot', $args );
-}
-add_action( 'init', 'su_robots_cpt' );
+	public function __construct() {
+		// Register the CPT and taxonomies
+		add_action( 'init', array( $this, 'robots_cpt' ) );
+		add_action( 'init', array( $this, 'robot_category_taxonomy' ) );
 
-/**
- * Register our Category taxonomy for our Robots CPT
- *
- * @return void
- */
-function su_robot_category_taxonomy () {
-    $labels = array(
-        'name' => 'Categories',
-        'singular_name' => 'Category',
+		// Register Metaboxes
+		add_action( 'add_meta_boxes', array( $this, 'register_meta_boxes' ) );
 
-    );
-
-    $args = array(
-        'labels'       => $labels,
-        'show_in_rest' => true,
-        'hierarchical' => true,
-    );
-
-    register_taxonomy( 'robot-category', 'robot', $args );
-}
-add_action( 'init', 'su_robot_category_taxonomy' );
-
-
-/**
- * Register meta box(es).
- */
-function robot_register_meta_boxes() {
-	add_meta_box( 'featured', __( 'Is Featured?', 'softuni' ), 'robots_featured_metabox_callback', 'robot', 'side' );
-}
-add_action( 'add_meta_boxes', 'robot_register_meta_boxes' );
-
-/**
- * Callback function for my Featured Metabox
- *
- * @return void
- */
-function robots_featured_metabox_callback ( $post_id ) {
-	$checked = get_post_meta( $post_id->ID, 'is_featured', true );
-	?>
-	<div>
-		<label for='is-featured'>Is Featured?</label>
-		<input id='is-featured' name='isfeatured' type='checkbox' value='1' <?php checked( $checked, 1, true ); ?>/>
-	</div>
-	<?php
-}
-
-/**
- * Save my Robotx post meta
- *
- * @return void
- */
-function robots_meta_save ( $post_id ) {
-	if ( empty( $post_id ) ) {
-		return;
+		// Save Actions
+		add_action( 'save_post', array( $this, 'robots_meta_save' ) );
 	}
 
-	$featured = '';
+	/**
+	 * Register our Robots Custom Post Type
+	 *
+	 * @return void
+	 */
+	public function robots_cpt() {
+		$labels = array(
+			'name'                  => _x( 'Robots', 'Post type general name', 'softuni' ),
+			'singular_name'         => _x( 'Robot', 'Post type singular name', 'softuni' ),
+			'menu_name'             => _x( 'Robots', 'Admin Menu text', 'softuni' ),
+			'name_admin_bar'        => _x( 'Robot', 'Add New on Toolbar', 'softuni' ),
+			'add_new'               => __( 'Add New', 'softuni' ),
+			'add_new_item'          => __( 'Add New Robot', 'softuni' ),
+			'new_item'              => __( 'New Robot', 'softuni' ),
+			'edit_item'             => __( 'Edit Robot', 'softuni' ),
+			'view_item'             => __( 'View Robot', 'softuni' ),
+			'all_items'             => __( 'All Robots', 'softuni' ),
+			// 'search_items'          => __( 'Search Robots', 'softuni' ),
+			// 'parent_item_colon'     => __( 'Parent Robots:', 'softuni' ),
+			// 'not_found'             => __( 'No Robots found.', 'softuni' ),
+			// 'not_found_in_trash'    => __( 'No Robots found in Trash.', 'softuni' ),
+			// 'featured_image'        => _x( 'Robot Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'softuni' ),
+			// 'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'softuni' ),
+			// 'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'softuni' ),
+			// 'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'softuni' ),
+			// 'archives'              => _x( 'Robot archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'softuni' ),
+			// 'insert_into_item'      => _x( 'Insert into Robot', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'softuni' ),
+			// 'uploaded_to_this_item' => _x( 'Uploaded to this Robot', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'softuni' ),
+			// 'filter_items_list'     => _x( 'Filter Robots list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'softuni' ),
+			// 'items_list_navigation' => _x( 'Robots list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'softuni' ),
+			// 'items_list'            => _x( 'Robots list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'softuni' ),
+		);
 
-	if ( isset( $_POST['isfeatured'] ) ) {
-		$featured = esc_attr( $_POST['isfeatured'] );
+		$args = array(
+			'labels'             => $labels,
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'capability_type'    => 'post',
+			'has_archive'        => true,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'supports'           => array(
+				'title',
+				'editor',
+				'author',
+				'thumbnail',
+				'revisions',
+			),
+			// 'show_in_rest'       => true
+		);
+
+		register_post_type( 'robot', $args );
 	}
 
-	update_post_meta( $post_id, 'is_featured', $featured );
+	/**
+	 * Register our Category taxonomy for our Robots CPT
+	 *
+	 * @return void
+	 */
+	public function robot_category_taxonomy () {
+		$labels = array(
+			'name' => 'Categories',
+			'singular_name' => 'Category',
+
+		);
+
+		$args = array(
+			'labels'       => $labels,
+			'show_in_rest' => true,
+			'hierarchical' => true,
+		);
+
+		register_taxonomy( 'robot-category', 'robot', $args );
+	}
+
+	/**
+	 * Register meta box(es).
+	 */
+	public function register_meta_boxes() {
+		add_meta_box( 'featured', __( 'Is Featured?', 'softuni' ), array( $this, 'robots_featured_metabox_callback' ), 'robot', 'side' );
+	}
+
+	/**
+	 * Callback function for my Featured Metabox
+	 *
+	 * @return void
+	 */
+	public function robots_featured_metabox_callback ( $post_id ) {
+		$checked = get_post_meta( $post_id->ID, 'is_featured', true );
+		?>
+		<div>
+			<label for='is-featured'>Is Featured?</label>
+			<input id='is-featured' name='isfeatured' type='checkbox' value='1' <?php checked( $checked, 1, true ); ?>/>
+		</div>
+		<?php
+	}
+
+
+	/**
+	 * Save my Robotx post meta
+	 *
+	 * @return void
+	 */
+	public function robots_meta_save ( $post_id ) {
+		if ( empty( $post_id ) ) {
+			return;
+		}
+
+		$featured = '';
+
+		if ( isset( $_POST['isfeatured'] ) ) {
+			$featured = esc_attr( $_POST['isfeatured'] );
+		}
+
+		update_post_meta( $post_id, 'is_featured', $featured );
+	}
+
 }
-add_action( 'save_post', 'robots_meta_save' );
 
-
-
+$su_robots_instance = new Su_Robots();
+endif;
