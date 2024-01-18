@@ -37,6 +37,14 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="relate-posts">
+                    <?php
+                    if ( function_exists( 'robots_display_related_posts' ) ) {
+                        robots_display_related_posts( get_the_ID() );
+                    }
+                    ?>
+                </div>
             </div>
 
         <?php endwhile; ?>

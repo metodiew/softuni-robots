@@ -54,3 +54,32 @@ function robots_like() {
 
 add_action( 'wp_ajax_nopriv_robots_like', 'robots_like' );
 add_action( 'wp_ajax_robots_like', 'robots_like' );
+
+
+/**
+ * Display related posts to our single robot view
+ *
+ * @return void
+ */
+function robots_display_related_posts( $post_id = 0 ) {
+    if ( empty( $post_id ) ) {
+        return;
+    }
+
+    $content = '';
+
+    $related_posts = get_field( 'related_posts', $post_id );
+
+    if ( ! empty( $related_posts ) && is_array( $related_posts ) ) {
+        ?>
+        <h3>Related Posts:</h3>
+        <?php
+        foreach ( $related_posts as $post ) {
+            ?>
+            <div class="relate-posts">
+                <a href="<?php echo get_the_permalink( $post->ID ) ?>"><?php echo $post->post_title ?></a>
+            </div>
+            <?php
+        }
+    }
+}
