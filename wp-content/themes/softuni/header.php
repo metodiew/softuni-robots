@@ -31,7 +31,9 @@
                         <a href="<?php echo esc_url( get_home_url() ); ?>"><img src="http://localhost/softuni/wp-content/themes/softuni/assets/images/logo.png" alt="logo"></a>
                     </div>
                     <div class="col-sm-3 col-sm-offset-3 text-right">
-                        <span class="ion-android-cart"></span> 0 products
+                        <?php if ( get_option( 'softunit_hide_product' ) != 1 ) : ?>
+                            <span class="ion-android-cart"></span> 0 products
+                        <?php endif; ?>
                         <form>
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="">
