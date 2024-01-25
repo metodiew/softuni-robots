@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-        <div class="intro row">
+        <div class="intro row new-class">
             <div class="overlay"></div>
             <div class="col-sm-12">
                 <ol class="breadcrumb">
